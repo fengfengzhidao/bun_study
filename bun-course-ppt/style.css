@@ -389,6 +389,149 @@
   text-align: right;
 }
 
+.tpl-bun-course .playground {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 18px;
+  min-height: 565px;
+}
+
+.tpl-bun-course .demo-list {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 10px;
+  overflow: auto;
+  scrollbar-color: var(--accent) rgba(255, 255, 255, 0.06);
+}
+
+.tpl-bun-course .demo-tab {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-2);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin: 0 0 4px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tpl-bun-course .demo-tab:last-child {
+  margin-bottom: 0;
+}
+
+.tpl-bun-course .demo-tab span {
+  font-family: var(--font-mono, monospace);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.tpl-bun-course .demo-tab.is-active,
+.tpl-bun-course .demo-tab:hover {
+  border-color: var(--border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-1);
+}
+
+.tpl-bun-course .demo-main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tpl-bun-course .demo-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tpl-bun-course .demo-title {
+  display: block;
+  color: var(--text-1);
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.tpl-bun-course .demo-command {
+  display: block;
+  color: var(--text-3);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 780px;
+}
+
+.tpl-bun-course .demo-actions {
+  display: flex;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.tpl-bun-course .icon-btn {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-1);
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.tpl-bun-course .icon-btn:hover,
+.tpl-bun-course .icon-btn.run {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.tpl-bun-course .demo-panels {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 0;
+  min-height: 0;
+}
+
+.tpl-bun-course .demo-code,
+.tpl-bun-course .demo-terminal {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  max-height: none;
+  height: 100%;
+  min-height: 470px;
+  overflow: auto;
+  scrollbar-color: var(--accent) rgba(255, 255, 255, 0.06);
+}
+
+.tpl-bun-course .demo-code {
+  border-right: 1px solid var(--border);
+}
+
+.tpl-bun-course .demo-terminal {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.tpl-bun-course .demo-terminal code {
+  color: #9be9a8;
+  white-space: pre-wrap;
+}
+
 .tpl-bun-course .mt-m {
   margin-top: 20px;
 }
@@ -421,6 +564,8 @@
   .tpl-bun-course .split,
   .tpl-bun-course .compare,
   .tpl-bun-course .code-pair,
+  .tpl-bun-course .playground,
+  .tpl-bun-course .demo-panels,
   .tpl-bun-course .g3,
   .tpl-bun-course .g4,
   .tpl-bun-course .command-grid {

@@ -31,7 +31,7 @@
     </div>
     <div class="deck-footer">
       <span class="mono">S 演讲者视图 · T 切换主题 · ← → 翻页</span>
-      <span class="slide-number" data-current="1" data-total="13"></span>
+      <span class="slide-number" data-current="1" data-total="14"></span>
     </div>
     <aside class="notes">
       <p>这节课我们讲 <strong>Bun</strong>。不要把它只理解成 Node.js 的一个替代品，它真正的价值是把现代 JavaScript 开发里一堆分散工具，重新收进一个统一的运行时里面。</p>
@@ -345,6 +345,36 @@ console.log(getVersion());
     </aside>
   </section>
 
+  <section class="slide playground-slide" data-title="Interactive Examples">
+    <p class="kicker">12 · 交互式示例</p>
+    <h2 class="h2">代码自动写入，点击运行看模拟输出</h2>
+    <div class="playground mt-m" data-bun-playground>
+      <div class="demo-list" role="tablist" aria-label="Bun 示例列表"></div>
+      <div class="demo-main">
+        <div class="demo-toolbar">
+          <div>
+            <b class="demo-title">选择一个示例</b>
+            <span class="demo-command mono"></span>
+          </div>
+          <div class="demo-actions">
+            <button type="button" class="icon-btn" data-action="type" title="播放代码">▶</button>
+            <button type="button" class="icon-btn run" data-action="run" title="运行示例">⚡</button>
+            <button type="button" class="icon-btn" data-action="reset" title="重置">↺</button>
+          </div>
+        </div>
+        <div class="demo-panels">
+          <pre class="demo-code"><code class="language-typescript"></code></pre>
+          <pre class="demo-terminal"><code></code></pre>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>这一页是纯前端的交互式演示，不会真的执行本机命令，所以它在浏览器里直接打开也能稳定运行。</p>
+      <p>左侧有 11 个 Bun 示例。切换示例时，右侧代码会自动像打字一样写出来；点击闪电按钮，会在终端区域打印我们预设好的运行结果。这样课堂上可以把“写代码”和“运行反馈”连起来讲。</p>
+      <p>要强调一点：这里是<strong>模拟运行</strong>，适合教学和录课。如果以后想升级成真实执行，可以再加本地 runner 服务，把按钮请求转发到 <code>bun run examples/...</code>。</p>
+    </aside>
+  </section>
+
   <section class="slide" data-title="Summary">
     <p class="kicker">13 · 总结</p>
     <h2 class="h2">今天需要带走的 5 个判断</h2>
@@ -358,7 +388,7 @@ console.log(getVersion());
     <p class="lede mt-l tc">课堂练习：用 Bun 写一个带路由、文件读写、测试和单文件打包的小 CLI/API。</p>
     <div class="deck-footer">
       <span class="mono">#Bun #JavaScript #Teaching</span>
-      <span class="slide-number" data-current="13" data-total="13"></span>
+      <span class="slide-number" data-current="14" data-total="14"></span>
     </div>
     <aside class="notes">
       <p>最后总结一下。今天不是为了让大家背下所有 Bun API，而是建立五个判断。</p>
@@ -379,6 +409,7 @@ console.log(getVersion());
     document.querySelectorAll("pre code").forEach((block) => hljs.highlightElement(block));
   });
 </script>
+<script src="playground.js"></script>
 <script src="assets/runtime.js"></script>
 </body>
 </html>
