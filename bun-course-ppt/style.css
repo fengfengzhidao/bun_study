@@ -1,0 +1,446 @@
+.tpl-bun-course .slide {
+  padding: 68px 88px;
+}
+
+.tpl-bun-course .kicker {
+  font-family: var(--font-mono, monospace);
+  font-size: 13px;
+  color: var(--text-3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+}
+
+.tpl-bun-course .h1 {
+  font-size: clamp(44px, 5.4vw, 76px);
+  line-height: 1.12;
+  margin: 0 0 24px;
+}
+
+.tpl-bun-course .h2 {
+  font-size: clamp(34px, 3.7vw, 54px);
+  line-height: 1.18;
+  margin: 0 0 26px;
+}
+
+.tpl-bun-course .h3,
+.tpl-bun-course h3 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  color: var(--text-1);
+}
+
+.tpl-bun-course .lede {
+  font-size: 21px;
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 880px;
+}
+
+.tpl-bun-course .dim {
+  color: var(--text-2);
+  line-height: 1.65;
+}
+
+.tpl-bun-course .accent {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.tpl-bun-course .accent-fill {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tpl-bun-course .mono,
+.tpl-bun-course code {
+  font-family: var(--font-mono, monospace);
+}
+
+.tpl-bun-course .cover-grid,
+.tpl-bun-course .split,
+.tpl-bun-course .compare,
+.tpl-bun-course .code-pair {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.tpl-bun-course .cover-grid {
+  align-items: center;
+}
+
+.tpl-bun-course .hero-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 14px;
+  overflow: hidden;
+  min-height: 360px;
+}
+
+.tpl-bun-course .hero-card img {
+  width: 100%;
+  height: 100%;
+  min-height: 332px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+.tpl-bun-course .speaker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+.tpl-bun-course .avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--grad);
+  color: var(--bg);
+  font-weight: 900;
+}
+
+.tpl-bun-course .speaker b {
+  display: block;
+  font-size: 16px;
+}
+
+.tpl-bun-course .speaker span {
+  display: block;
+  color: var(--text-3);
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+.tpl-bun-course .quote-panel,
+.tpl-bun-course .tile,
+.tpl-bun-course .point,
+.tpl-bun-course .feature,
+.tpl-bun-course .mini-code,
+.tpl-bun-course .bad,
+.tpl-bun-course .good,
+.tpl-bun-course .note-strip,
+.tpl-bun-course .callout,
+.tpl-bun-course pre {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 8px;
+}
+
+.tpl-bun-course .quote-panel {
+  padding: 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 5px solid var(--accent);
+}
+
+.tpl-bun-course .quote-panel p:first-child {
+  font-size: 31px;
+  line-height: 1.35;
+  margin: 0 0 22px;
+  color: var(--text-1);
+  font-weight: 760;
+}
+
+.tpl-bun-course .stack > * + * {
+  margin-top: 14px;
+}
+
+.tpl-bun-course .point {
+  padding: 18px 20px;
+}
+
+.tpl-bun-course .point span,
+.tpl-bun-course .feature span {
+  display: inline-block;
+  font-family: var(--font-mono, monospace);
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.tpl-bun-course .point b {
+  display: block;
+  color: var(--text-1);
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.tpl-bun-course .point p,
+.tpl-bun-course .feature p,
+.tpl-bun-course .tile p,
+.tpl-bun-course .note-strip p {
+  color: var(--text-2);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.tpl-bun-course .grid {
+  display: grid;
+  gap: 18px;
+}
+
+.tpl-bun-course .g3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.tpl-bun-course .g4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.tpl-bun-course .tile {
+  padding: 26px 22px;
+  min-height: 150px;
+}
+
+.tpl-bun-course .tile b {
+  display: block;
+  font-size: 21px;
+  margin-bottom: 12px;
+  color: var(--text-1);
+}
+
+.tpl-bun-course .flow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 14px 0;
+}
+
+.tpl-bun-course .flow span,
+.tpl-bun-course .flow i,
+.tpl-bun-course .three-facts span {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 9px 14px;
+  color: var(--text-2);
+  font-style: normal;
+}
+
+.tpl-bun-course .flow span:first-child {
+  color: var(--text-1);
+  font-weight: 800;
+}
+
+.tpl-bun-course .flow.compact i {
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.tpl-bun-course pre {
+  margin: 0;
+  padding: 18px 20px;
+  overflow: auto;
+  max-height: 470px;
+}
+
+.tpl-bun-course pre code {
+  white-space: pre;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-1);
+}
+
+.tpl-bun-course pre code.hljs {
+  background: transparent;
+  padding: 0;
+}
+
+.tpl-bun-course .code-pair > div,
+.tpl-bun-course .bad,
+.tpl-bun-course .good {
+  min-width: 0;
+}
+
+.tpl-bun-course .compare .bad,
+.tpl-bun-course .compare .good {
+  padding: 26px;
+}
+
+.tpl-bun-course .compare ul {
+  margin: 12px 0 0;
+  padding-left: 22px;
+  color: var(--text-2);
+  line-height: 1.9;
+  font-size: 18px;
+}
+
+.tpl-bun-course .callout {
+  padding: 18px 22px;
+  color: var(--text-2);
+  border-left: 5px solid var(--accent);
+  font-size: 18px;
+}
+
+.tpl-bun-course .command-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.tpl-bun-course .command-grid div {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 20px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.tpl-bun-course .command-grid span {
+  color: var(--text-2);
+}
+
+.tpl-bun-course .command-grid code {
+  color: var(--accent);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.tpl-bun-course .note-strip {
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.tpl-bun-course .note-strip b {
+  color: var(--accent);
+  font-size: 18px;
+}
+
+.tpl-bun-course .feature {
+  padding: 24px;
+  min-height: 230px;
+}
+
+.tpl-bun-course .feature h3 {
+  font-size: 24px;
+}
+
+.tpl-bun-course .code-wide pre {
+  max-height: none;
+}
+
+.tpl-bun-course .three-facts {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tpl-bun-course .mini-code {
+  padding: 18px;
+}
+
+.tpl-bun-course .mini-code pre {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  max-height: none;
+}
+
+.tpl-bun-course .mini-code pre code {
+  font-size: 12px;
+}
+
+.tpl-bun-course .agenda-row {
+  display: grid;
+  grid-template-columns: 54px 1fr 86px;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.tpl-bun-course .agenda-row .num {
+  font-family: var(--font-mono, monospace);
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.tpl-bun-course .agenda-row .t {
+  color: var(--text-1);
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.tpl-bun-course .agenda-row .d {
+  color: var(--text-3);
+  font-family: var(--font-mono, monospace);
+  font-size: 13px;
+  text-align: right;
+}
+
+.tpl-bun-course .mt-m {
+  margin-top: 20px;
+}
+
+.tpl-bun-course .mt-l {
+  margin-top: 32px;
+}
+
+.tpl-bun-course .tc {
+  text-align: center;
+}
+
+.keyhint {
+  position: fixed;
+  right: 16px;
+  top: 14px;
+  z-index: 100;
+  pointer-events: none;
+  color: var(--text-3);
+  font-size: 12px;
+  opacity: 0.72;
+}
+
+@media (max-width: 900px) {
+  .tpl-bun-course .slide {
+    padding: 42px 30px;
+  }
+
+  .tpl-bun-course .cover-grid,
+  .tpl-bun-course .split,
+  .tpl-bun-course .compare,
+  .tpl-bun-course .code-pair,
+  .tpl-bun-course .g3,
+  .tpl-bun-course .g4,
+  .tpl-bun-course .command-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tpl-bun-course .hero-card {
+    min-height: 220px;
+  }
+
+  .tpl-bun-course .hero-card img {
+    min-height: 200px;
+  }
+
+  .tpl-bun-course .note-strip,
+  .tpl-bun-course .agenda-row {
+    grid-template-columns: 1fr;
+  }
+
+  .tpl-bun-course .agenda-row .d {
+    text-align: left;
+  }
+}

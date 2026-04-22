@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "types": ["bun"],
+    "moduleResolution": "bundler",
+    "target": "ESNext",
+    "module": "ESNext",
+    "allowImportingTsExtensions": true,
+    "strict": true
+  }
+}

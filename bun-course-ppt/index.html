@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-themes="tokyo-night,dracula,catppuccin-mocha,nord,corporate-clean,engineering-whiteprint">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bun 现代 JavaScript 运行时教学课件</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" id="theme-link" href="assets/themes/tokyo-night.css">
+<link rel="stylesheet" href="assets/animations/animations.css">
+<link rel="stylesheet" href="assets/highlight/tokyo-night-dark.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="tpl-bun-course">
+<div class="deck">
+
+  <section class="slide cover" data-title="Cover">
+    <div class="cover-grid">
+      <div>
+        <p class="kicker">Bun Course · JS Runtime</p>
+        <h1 class="h1 anim-fade-up" data-anim="fade-up">Bun：把 JS 开发流程<br><span class="accent-fill">重新压缩成一条命令</span></h1>
+        <p class="lede">运行时、包管理器、测试框架、打包器、Shell、SQLite，全都内置。</p>
+        <div class="speaker">
+          <div class="avatar">B</div>
+          <div><b>Bun 入门到实战</b><span>教学课件 · 45-60 min</span></div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <img src="assets/bun-context.png" alt="Bun and Claude Code context">
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span class="mono">S 演讲者视图 · T 切换主题 · ← → 翻页</span>
+      <span class="slide-number" data-current="1" data-total="13"></span>
+    </div>
+    <aside class="notes">
+      <p>这节课我们讲 <strong>Bun</strong>。不要把它只理解成 Node.js 的一个替代品，它真正的价值是把现代 JavaScript 开发里一堆分散工具，重新收进一个统一的运行时里面。</p>
+      <p>今天会按照教学节奏来走：先讲为什么现在值得学 Bun，再讲安装和基本命令，然后逐步看它怎么处理 TypeScript、包管理、环境变量、文件、HTTP 服务、SQLite、测试、Shell 脚本和单文件打包。</p>
+      <p>大家听的时候重点抓一个问题：以前我们需要装很多工具才能完成的事情，在 Bun 里是不是可以用更少的配置直接完成。这个问题会贯穿整节课。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="Why Now">
+    <p class="kicker">01 · 背景</p>
+    <h2 class="h2">为什么现在是学习 Bun 的好时机？</h2>
+    <div class="split mt-l">
+      <div class="quote-panel">
+        <p>AI 编程工具让“模型 → 代码 → 执行 → 反馈”的循环变得极高频。</p>
+        <p class="dim">运行时启动速度、依赖安装速度、单文件分发能力，都会直接影响 Agent 产品体验。</p>
+      </div>
+      <div class="stack">
+        <div class="point"><span>01</span><b>Claude Code 场景</b><p>AI Agent 需要频繁执行代码、跑测试、安装依赖。</p></div>
+        <div class="point"><span>02</span><b>二进制分发</b><p>Bun 可以把 JS/TS 项目编译成单个可执行文件。</p></div>
+        <div class="point"><span>03</span><b>基础设施掌控</b><p>核心产品越依赖运行时，越需要控制底层稳定性和性能。</p></div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>先从背景讲起。文档里提到 Bun 团队加入 Anthropic，这件事在开发者圈子里引起讨论，核心不只是“谁收购了谁”，而是一个趋势：<strong>AI 模型公司开始重视底层开发基础设施</strong>。</p>
+      <p>原因很直接。像 Claude Code 这样的 AI 编程工具，不是简单生成一段代码就结束。它会改文件、运行命令、装依赖、跑测试，再根据结果继续修改。这个循环越高频，运行时的启动速度和执行效率就越关键。</p>
+      <p>所以我们学习 Bun，不只是追新工具，而是在理解未来 AI 编程工作流里，为什么更轻、更快、更容易分发的 JS 运行时会变得重要。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="Mental Model">
+    <p class="kicker">02 · 认知模型</p>
+    <h2 class="h2">Bun 不是一个命令替换器，<br>它是一个<span class="accent">全家桶运行时</span></h2>
+    <div class="grid g4 mt-l">
+      <div class="tile"><b>Runtime</b><p>直接运行 JS / TS / JSX / TSX</p></div>
+      <div class="tile"><b>Package Manager</b><p>兼容 npm 生态，安装更快</p></div>
+      <div class="tile"><b>Bundler</b><p>构建、打包、编译成二进制</p></div>
+      <div class="tile"><b>Toolbox</b><p>测试、Shell、SQLite、Web API</p></div>
+    </div>
+    <div class="flow mt-l">
+      <span>Node.js 时代</span><i>ts-node / tsx</i><i>dotenv</i><i>Jest / Vitest</i><i>Webpack / Vite</i><span>多个工具拼装</span>
+    </div>
+    <div class="flow compact">
+      <span>Bun 时代</span><i>bun</i><span>一套工具链覆盖日常开发</span>
+    </div>
+    <aside class="notes">
+      <p>这一页先建立认知模型。学习 Bun 不是把 <code>npm install</code> 换成 <code>bun install</code> 这么简单。如果只是记命令，过两天就忘了。</p>
+      <p>更准确地说，Bun 是一个 <strong>全家桶运行时</strong>。它既能运行代码，又能安装依赖，还能构建、测试、写脚本、处理 SQLite，甚至直接启动 HTTP 服务。</p>
+      <p>这和 Node.js 时代的体验差异很大。以前我们写一个 TS 项目，可能要配 ts-node 或 tsx；读环境变量要 dotenv；测试要 Jest 或 Vitest；打包还要 Webpack、Rollup 或 Vite。Bun 的目标是把这些高频能力都收进一个工具里。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="Install">
+    <p class="kicker">03 · 安装</p>
+    <h2 class="h2">安装 Bun：先确认命令能跑起来</h2>
+    <div class="code-pair mt-l">
+      <div>
+        <h3>macOS / Linux / WSL</h3>
+        <pre><code class="language-bash">curl -fsSL https://bun.sh/install | bash</code></pre>
+      </div>
+      <div>
+        <h3>Windows PowerShell</h3>
+        <pre><code class="language-powershell">powershell -c "irm bun.sh/install.ps1 | iex"</code></pre>
+      </div>
+    </div>
+    <div class="code-pair mt-m">
+      <div>
+        <h3>通过 npm 安装</h3>
+        <pre><code class="language-bash">npm install -g bun</code></pre>
+      </div>
+      <div>
+        <h3>验证版本</h3>
+        <pre><code class="language-bash">bun --version</code></pre>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>安装这一页很简单，但课堂上一定要让大家真的跑一遍。不同系统命令不一样：macOS、Linux 和 WSL 通常用 curl 脚本；Windows 可以直接用 PowerShell；如果已经有 Node 环境，也可以通过 npm 全局安装。</p>
+      <p>安装完成以后，不要急着写代码，先运行 <code>bun --version</code>。只要能看到版本号，就说明环境变量和执行路径基本没问题。</p>
+      <p>这里顺便强调一下：学习新工具时，第一步不是理解所有高级特性，而是把最小反馈链路跑通。能安装、能查看版本、能执行一个文件，后面所有内容才有基础。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="Run TS">
+    <p class="kicker">04 · 直接运行 TypeScript</p>
+    <h2 class="h2">彻底告别“先配转译器”</h2>
+    <div class="compare mt-l">
+      <div class="bad">
+        <h3>Node.js 常见链路</h3>
+        <ul>
+          <li>运行 TS：装 <code>ts-node</code> 或 <code>tsx</code></li>
+          <li>运行 JSX：配置 Babel 或构建工具</li>
+          <li>预览项目：先理解一堆配置</li>
+        </ul>
+      </div>
+      <div class="good">
+        <h3>Bun 链路</h3>
+        <pre><code class="language-bash">bun index.ts
+bun component.tsx
+bun --hot server.ts</code></pre>
+      </div>
+    </div>
+    <div class="callout mt-l">提示：<code>tsconfig.json</code> 仍然有用，但更多用于类型检查和编辑器体验。</div>
+    <aside class="notes">
+      <p>第一个真正影响开发体验的能力，是 Bun 可以直接运行 TypeScript 和 TSX。传统 Node.js 环境里，运行 TS 往往要装 <code>ts-node</code> 或 <code>tsx</code>，运行 JSX 还可能需要 Babel 或构建工具。</p>
+      <p>Bun 的做法更直接：<strong>你写什么文件，就直接 bun 这个文件</strong>。比如 <code>bun index.ts</code>，或者 <code>bun component.tsx</code>。这对教学和小实验特别友好，因为学生不需要先被工具链劝退。</p>
+      <p>不过也要讲清楚，Bun 不是让 <code>tsconfig.json</code> 完全消失。它仍然会影响类型检查、路径别名和编辑器行为。只是运行代码这一步，不再依赖复杂转译配置。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="Package Manager">
+    <p class="kicker">05 · 包管理</p>
+    <h2 class="h2">极速包管理：兼容 npm 生态，减少等待</h2>
+    <div class="command-grid mt-l">
+      <div><span>安装全部依赖</span><code>bun install</code></div>
+      <div><span>添加运行依赖</span><code>bun add axios</code></div>
+      <div><span>添加开发依赖</span><code>bun add -d @types/bun</code></div>
+      <div><span>运行脚本</span><code>bun run dev</code></div>
+    </div>
+    <div class="note-strip mt-l">
+      <b>关键点</b>
+      <p>Bun 兼容 <code>node_modules</code> 结构，同时使用自己的锁文件来提升读取和安装速度。</p>
+    </div>
+    <aside class="notes">
+      <p>包管理这一部分很适合现场演示。因为它不是抽象概念，大家能直接感受到速度差异。常用命令也不难记，<code>bun install</code> 对应 <code>npm install</code>，<code>bun add</code> 对应安装依赖。</p>
+      <p>这里要强调两个点。第一，Bun 不是重新发明整个生态，它仍然兼容 npm 包和 <code>node_modules</code> 结构，所以迁移成本没有想象中那么高。</p>
+      <p>第二，速度对日常开发很重要。尤其在 AI Agent 场景里，安装依赖可能不是人偶尔点一次，而是自动化流程频繁触发。每次少等几秒，整体反馈循环就会明显变快。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="Toolbox">
+    <p class="kicker">06 · CLI 工具箱</p>
+    <h2 class="h2">很多第三方库，在 Bun 里变成了内置能力</h2>
+    <div class="grid g3 mt-l">
+      <div class="feature"><span>ENV</span><h3>环境变量</h3><p>默认读取 <code>.env</code>，直接用 <code>process.env</code> 或 <code>Bun.env</code>。</p></div>
+      <div class="feature"><span>FILE</span><h3>文件操作</h3><p><code>Bun.file()</code> 返回懒加载文件对象，写入用 <code>Bun.write()</code>。</p></div>
+      <div class="feature"><span>WEB</span><h3>Web API</h3><p>原生支持 <code>fetch</code>、<code>Request</code>、<code>Response</code>、<code>WebSocket</code>。</p></div>
+    </div>
+    <pre class="mt-l"><code class="language-ini"># .env
+PORT=3000
+API_KEY=fengfeng_666
+
+// index.ts
+console.log(process.env.PORT);
+console.log(Bun.env.API_KEY);</code></pre>
+    <aside class="notes">
+      <p>这页讲 Bun 的工具箱思路。很多 Node.js 里要靠第三方库补齐的能力，在 Bun 里是默认内置的。</p>
+      <p>第一个例子是环境变量。以前我们常常装 <code>dotenv</code>，然后在入口文件顶部写 <code>require('dotenv').config()</code>。Bun 默认就会处理 <code>.env</code>，所以可以直接读 <code>process.env</code>，也可以用 <code>Bun.env</code>。</p>
+      <p>第二个例子是文件操作。<code>Bun.file()</code> 的体验更接近 Web 标准里的 Blob，对读取文本、二进制、写文件都更简洁。第三个是 Web API，前端熟悉的 <code>fetch</code>、<code>Request</code>、<code>Response</code> 在服务端也能自然使用。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="File API">
+    <p class="kicker">07 · 文件 API</p>
+    <h2 class="h2">Bun.file：用更少代码处理文件和流</h2>
+    <div class="code-wide mt-l">
+      <pre><code class="language-typescript">const file = Bun.file("input.txt");
+
+const text = await file.text();
+const arrayBuffer = await file.arrayBuffer();
+
+await Bun.write("output.txt", "这是 Teacher Fengfeng 写入的新内容");
+
+const response = await fetch("https://example.com");
+await Bun.write("website.html", response);
+
+export {}; // 让编辑器把文件视为 ESM，避免顶层 await 报红</code></pre>
+    </div>
+    <div class="three-facts mt-l">
+      <span>懒加载</span><span>Blob 风格 API</span><span>支持把 Response 写成文件</span>
+    </div>
+    <aside class="notes">
+      <p>文件 API 可以作为课堂练习。先准备一个 <code>input.txt</code>，然后用 <code>Bun.file()</code> 读取文本，再用 <code>Bun.write()</code> 写一个新文件。</p>
+      <p>这里有两个教学点。第一，<code>Bun.file()</code> 返回的不是马上把文件全部读进内存的字符串，而是一个文件对象，真正读取发生在调用 <code>text()</code> 或 <code>arrayBuffer()</code> 的时候。</p>
+      <p>第二，Bun 很多 API 都贴近 Web 标准。比如从 <code>fetch</code> 得到的 Response，可以直接写进文件。这个写法对做下载器、缓存器、代理工具都很顺手。</p>
+      <p>如果编辑器里顶层 <code>await</code> 报红，可以在文件末尾加 <code>export {}</code>，让 TypeScript 把当前文件识别成 ESM。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="Bun Serve">
+    <p class="kicker">08 · HTTP 服务</p>
+    <h2 class="h2">Bun.serve：内置高性能 Web 服务器</h2>
+    <div class="split mt-l">
+      <pre><code class="language-typescript">Bun.serve({
+  port: 3000,
+  fetch(req) {
+    return new Response("Welcome to Bun!");
+  },
+});
+
+// 热重载
+bun --hot index.ts</code></pre>
+      <div class="stack">
+        <div class="point"><span>HOT</span><b>热重载</b><p>修改代码后服务快速更新，不需要手动重启。</p></div>
+        <div class="point"><span>TLS</span><b>HTTPS 配置</b><p>通过 <code>tls</code> 字段传入 key、cert、ca。</p></div>
+        <div class="point"><span>LIMIT</span><b>安全参数</b><p>配置 hostname、maxRequestBodySize、reusePort。</p></div>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>接下来是 Bun 的杀手锏之一：<strong>Bun.serve</strong>。它内置了一个高性能 Web 服务器，所以写最小服务非常简单。</p>
+      <p>左边这段代码就是完整服务。监听 3000 端口，请求进来以后返回一个 Response。这个 Response 和浏览器 Fetch API 里的 Response 是同一套概念，所以前后端知识可以复用。</p>
+      <p>教学时可以先跑 <code>bun index.ts</code>，再改成 <code>bun --hot index.ts</code>。让学生修改返回文本，刷新浏览器看到变化，就能理解热重载的价值。</p>
+      <p>实际项目里还要关注安全和部署参数，比如限制上传体积、绑定 localhost、HTTPS 证书、Linux 下的 reusePort，这些都是从玩具项目走向生产服务时必须知道的。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="Routing">
+    <p class="kicker">09 · 路由</p>
+    <h2 class="h2">两种路由思路：文件路由 or 框架路由</h2>
+    <div class="code-pair mt-l">
+      <div>
+        <h3>内置 FileSystemRouter</h3>
+        <pre><code class="language-typescript">const router = new Bun.FileSystemRouter({
+  style: "nextjs",
+  dir: "./pages",
+});
+
+Bun.serve({
+  fetch(req) {
+    const match = router.match(req);
+    if (match) {
+      return import(match.filePath)
+        .then(mod =&gt; mod.default(req, match));
+    }
+    return new Response("404", { status: 404 });
+  },
+});</code></pre>
+      </div>
+      <div>
+        <h3>Elysia 风格</h3>
+        <pre><code class="language-typescript">import { Elysia } from "elysia";
+
+new Elysia()
+  .get("/", () =&gt; "首页")
+  .get("/user/:id", ({ params: { id } }) =&gt; `用户ID: ${id}`)
+  .post("/upload", ({ body }) =&gt; ({ status: "success" }))
+  .listen(3000);</code></pre>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>讲完最小 HTTP 服务，再讲路由。这里可以给学生两个选择：如果喜欢 Next.js 那种目录即路由的思路，可以看 Bun 内置的 <code>FileSystemRouter</code>；如果喜欢 Express 风格，就用 Elysia 这样的框架。</p>
+      <p>左边的例子里，<code>style: "nextjs"</code> 表示支持类似 <code>[id].ts</code> 的动态路由语法。请求进来以后先匹配文件，再动态 import 对应模块。</p>
+      <p>右边是 Elysia，更像我们熟悉的后端路由写法。<code>.get</code>、<code>.post</code> 链式注册路由，路径参数也比较直观。</p>
+      <p>课堂上建议不要一开始就上框架。先用 <code>Bun.serve</code> 理解底层，再引入 Elysia，会更清楚框架到底帮我们封装了什么。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="Data Test Shell">
+    <p class="kicker">10 · 数据、测试、脚本</p>
+    <h2 class="h2">Bun 把后端常用小工具也放进来了</h2>
+    <div class="grid g3 mt-l">
+      <div class="mini-code">
+        <h3>SQLite</h3>
+        <pre><code class="language-typescript">import { Database } from "bun:sqlite";
+
+const db = new Database(":memory:");
+const query = db.query("SELECT 'Hello Bun!' as message");
+console.log(query.get());</code></pre>
+      </div>
+      <div class="mini-code">
+        <h3>Test</h3>
+        <pre><code class="language-typescript">import { expect, test } from "bun:test";
+
+test("sum", () =&gt; {
+  expect(1 + 1).toBe(2);
+});
+
+bun test</code></pre>
+      </div>
+      <div class="mini-code">
+        <h3>Shell</h3>
+        <pre><code class="language-typescript">import { $ } from "bun";
+
+await $`mkdir -p new_folder`;
+const files = await $`ls`.text();
+console.log(files);</code></pre>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>这一页把三个能力放在一起讲：SQLite、测试框架和 Bun Shell。它们共同体现了 Bun 的设计取向：把高频、基础、容易重复安装的能力内置进来。</p>
+      <p>SQLite 很适合教学和小型工具，因为不需要单独启动数据库服务。Bun 内置 <code>bun:sqlite</code>，不需要安装驱动，也不需要编译 C++ 插件。</p>
+      <p>测试方面，<code>bun test</code> 的语法兼容 Jest 风格，<code>test</code>、<code>expect</code>、<code>describe</code> 这些概念学生已经很熟悉。</p>
+      <p>Bun Shell 则解决跨平台脚本问题。以前在 Node.js 里写脚本，经常要处理 Windows 和 Linux 命令差异，或者引入 zx。Bun 直接提供 <code>$</code> 模板字符串，写工具脚本会轻很多。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="Compile Macro">
+    <p class="kicker">11 · 分发与进阶</p>
+    <h2 class="h2">单文件打包 + 宏：从工具到产品</h2>
+    <div class="split mt-l">
+      <div>
+        <h3>单文件二进制</h3>
+        <pre><code class="language-bash">bun build ./index.ts --compile --outfile my-app</code></pre>
+        <p class="dim">把 Bun 运行时、你的代码、依赖一起打进可执行文件。</p>
+      </div>
+      <div>
+        <h3>编译时宏</h3>
+        <pre><code class="language-typescript">import { getVersion } from "./utils.ts" with { type: "macro" };
+
+console.log(getVersion());
+// 编译后直接变成 "1.0.0"</code></pre>
+      </div>
+    </div>
+    <div class="note-strip mt-l">
+      <b>适合场景</b>
+      <p>CLI 工具、AI Agent、内部运维工具、桌面辅助脚本、无需用户预装 Node/Bun 的分发包。</p>
+    </div>
+    <aside class="notes">
+      <p>这一页讲两个更进阶的能力。第一个是单文件打包。命令是 <code>bun build ./index.ts --compile --outfile my-app</code>，它会把运行时、代码和依赖一起打进一个可执行文件。</p>
+      <p>这对分发 CLI 工具非常有价值。Node.js 时代，用户通常要先装 Node，再全局安装包，或者我们要借助比较重的第三方打包方案。Bun 的 compile 是原生能力，交付体验更直接。</p>
+      <p>第二个是宏，也就是编译时执行代码。比如打包时读取 <code>package.json</code> 的版本号，然后把结果直接硬编码进输出文件。这个能力适合处理编译期可确定的数据。</p>
+      <p>这里不用让初学者一上来就写宏，但要让他们知道 Bun 不只是快，它还在尝试改变 JS 工具的分发方式。</p>
+    </aside>
+  </section>
+
+  <section class="slide" data-title="Summary">
+    <p class="kicker">13 · 总结</p>
+    <h2 class="h2">今天需要带走的 5 个判断</h2>
+    <div class="stack mt-l">
+      <div class="agenda-row"><span class="num">01</span><span class="t">Bun 的核心价值是减少工具链碎片</span><span class="d">runtime</span></div>
+      <div class="agenda-row"><span class="num">02</span><span class="t">TS/JSX、.env、fetch、WebSocket 都可以更自然地跑</span><span class="d">DX</span></div>
+      <div class="agenda-row"><span class="num">03</span><span class="t">Bun.serve 适合快速做 HTTP 服务和课堂实验</span><span class="d">server</span></div>
+      <div class="agenda-row"><span class="num">04</span><span class="t">SQLite、test、Shell 让小工具开发更轻</span><span class="d">toolbox</span></div>
+      <div class="agenda-row"><span class="num">05</span><span class="t">--compile 让 JS/TS 工具具备更好的分发形态</span><span class="d">ship</span></div>
+    </div>
+    <p class="lede mt-l tc">课堂练习：用 Bun 写一个带路由、文件读写、测试和单文件打包的小 CLI/API。</p>
+    <div class="deck-footer">
+      <span class="mono">#Bun #JavaScript #Teaching</span>
+      <span class="slide-number" data-current="13" data-total="13"></span>
+    </div>
+    <aside class="notes">
+      <p>最后总结一下。今天不是为了让大家背下所有 Bun API，而是建立五个判断。</p>
+      <p>第一，Bun 的核心价值是减少工具链碎片；第二，TypeScript、环境变量、Web API 这些日常能力可以更自然地跑起来；第三，<code>Bun.serve</code> 适合快速做 HTTP 服务和教学实验；第四，SQLite、测试、Shell 让小工具开发更轻；第五，<code>--compile</code> 让 JS 和 TS 工具有了更好的分发形态。</p>
+      <p>课后练习建议做一个小项目：用 Bun 写一个带路由的 API，读取一个本地文件，写一个测试，最后编译成单文件。把这条链路跑通，就算真正入门了。</p>
+    </aside>
+  </section>
+
+</div>
+
+<div class="keyhint">
+  S 演讲者视图 · T 切换主题 · ← → 翻页 · F 全屏 · O 总览 · R 重置计时
+</div>
+
+<script src="assets/highlight/highlight.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("pre code").forEach((block) => hljs.highlightElement(block));
+  });
+</script>
+<script src="assets/runtime.js"></script>
+</body>
+</html>
