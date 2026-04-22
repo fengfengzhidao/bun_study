@@ -1,0 +1,2 @@
+Hello Bun File API!
+这是一段用于演示 Bun.file() 的文本。

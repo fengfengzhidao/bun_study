@@ -4,7 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "example:env": "bun --env-file=examples/01-env/example.env run examples/01-env/index.ts",
+    "example:file": "bun run examples/02-file-api/index.ts",
+    "example:fetch": "bun run examples/03-fetch-web-api/index.ts",
+    "example:serve": "bun run examples/04-bun-serve/index.ts",
+    "example:router": "bun run examples/05-filesystem-router/index.ts",
+    "example:elysia": "bun run examples/06-elysia-api/index.ts",
+    "example:sqlite": "bun run examples/07-sqlite/index.ts",
+    "example:shell": "bun run examples/09-bun-shell/index.ts",
+    "test": "bun test examples/08-bun-test"
   },
   "private": true,
   "dependencies": {
